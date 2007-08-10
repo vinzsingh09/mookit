@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>On Hover Accordion</title>
+	<script src="../../commons/mootools.v1.11.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="styles.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		
+	<script type="text/javascript" charset="utf-8">
+	window.addEvent('domready', function(){
+		var accordion = new Accordion('dt.atStart', 'dd.atStart', {
+			opacity: false,
+			fixedHeight: 150,
+			onActive: function(toggler, element){
+				toggler.setStyle('color', '#ff3300');
+			},
+			
+			onBackground: function(toggler, element){
+				toggler.setStyle('color', '#222');
+			},
+			show: 1
+			
+		}, $('accordion'));
+		
+		$$('dt.toggler').addEvent('mouseenter', function() {
+			accordion.display(this.getNext());
+		});
+		
+	});
+	</script>
+	
+</head>
+
+<body>
+
+	<h2>Accordion</h2>
+
+	<dl id="accordion">
+		<dt class="toggler atStart">
+			History
+		</dt>
+		<dd class="element atStart">
+			<p>
+				The first suggestion that all organisms may have had a common ancestor and diverged
+				through random variation and natural selection was made in 1745 by the French
+				mathematician and scientist Pierre-Louis Moreau de Maupertuis (1698-1759) in his work
+				Venus physique. Specifically:
+			</p>
+		</dd>
+		<dt class="toggler atStart">
+			Evidence of universal common descent
+		</dt>
+		<dd class="element atStart">
+			<p>
+				All known forms of life are based on the same fundamental biochemical organisation:
+				genetic information encoded in DNA, transcribed into RNA, through the effect of
+				protein- and RNA-enzymes, then translated into proteins by (highly similar)
+				ribosomes, with ATP, NADH and others as energy currencies, etc. Furthermore, the
+				genetic code (the "translation table" according to which DNA information is
+				translated into proteins) is nearly identical for all known lifeforms, from bacteria
+				to humans, with minor local differences. The universality of this code is generally
+				regarded by biologists as definitive evidence in favor of the theory of universal
+				common descent. Analysis of the small differences in the genetic code has also
+				provided support for universal common descent.[2]
+			</p>
+		</dd>
+		<dt class="toggler atStart">
+			Examples of common descent
+		</dt>
+		<dd class="element atStart">
+			<h4>
+				Artificial selection
+			</h4>
+			<p>
+				Artificial selection offers remarkable examples of the amount of diversity that can
+				exist between individuals sharing a late common ancestor. To perform artificial
+				selection, one begins with a particular species (following examples include wolves
+				and wild cabbage) and then, at every generation, only allow certain individuals to
+				reproduce, based on the degree to which they exhibit certain desirable
+				characteristics. In time, it is expected that these characteristics become
+				increasingly well-developed in successive generations. Many examples of artificial
+				selection, like the ones below, occurred without the guidance of modern scientific
+				insight.
+			</p>
+
+		</dd>
+	</dl>
+
+</body>
+</html>

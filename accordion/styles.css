@@ -1,0 +1,61 @@
+		
+		body {
+			font-family: "Lucida Grande";
+		}
+		
+		.toggler {
+			color: #222;
+			margin: 0;
+			padding: 2px 5px;
+			background: #eee;
+			border-bottom: 1px solid #ddd;
+			border-right: 1px solid #ddd;
+			border-top: 1px solid #f5f5f5;
+			border-left: 1px solid #f5f5f5;
+			font-size: 11px;
+			font-weight: normal;
+			font-family: 'Andale Mono', sans-serif;
+		}
+
+		.element {
+
+		}
+
+		.element p {
+			margin: 0;
+			padding: 4px;
+		}
+
+		.float-right {
+			padding:10px 20px;
+			float:right;
+		}
+
+		blockquote {
+			text-style:italic;
+			padding:5px 0 5px 30px;
+		}
+		
+		dd {
+			margin-left: 0;
+			padding-left: 0;
+		}
+		
+		/* IPOD YOUR LIFE */
+		ul { margin-bottom: 18px; list-style: none outside; }
+		img { border: 0; }
+		a { text-decoration: none; }
+		#ipodyourlife { width: 185px; }
+		#ipodyourlife h2 { background: url(http://images.apple.com/itunes/home/images/ipodyourlife_headerbg.png) no-repeat; }
+		#ipodyourlife .drawers { margin: 0; position: relative; overflow: hidden; }
+		#ipodyourlife .drawers li { display: block; z-index: 1; width: 100%; }
+		#ipodyourlife .drawers img.photo { display: block; margin: 0 1px; background: #5b5b5b; }
+		#ipodyourlife .drawers .handle { display: block; padding: 16px 15px 9px; height: 87px; margin-bottom: -6px; _margin-bottom: -8px; overflow: hidden; background: url(http://images.apple.com/itunes/home/images/shingles_handlebg.png) -184px 100% no-repeat; }
+		#ipodyourlife .drawers .handle:hover { text-decoration: none; }
+		#ipodyourlife .drawers .handle strong { display: block; font-size: 13px; color: #fff; font-weight: normal; height: 18px; white-space: nowrap; overflow: hidden; }
+		#ipodyourlife .drawers .handle .description { color: #fff; height: 28px; overflow: hidden; line-height: 14px; }
+/*		#ipodyourlife .drawers .handle .more { color: #fff; background-image: url(http://images.apple.com/itunes/home/images/morearrow_light.png); }*/
+		#ipodyourlife .drawers li.obscured .handle { background-position: 0 100%; }
+		#ipodyourlife .drawers li.obscured .handle .description { color: #ccc; }
+/*		#ipodyourlife .drawers li.obscured .handle .more { color: #cdcdcd; background-image: url(http://images.apple.com/itunes/home/images/morearrow.png); }*/
+		#ipodyourlife .drawers li.obscured img.photo { background: #232323; }

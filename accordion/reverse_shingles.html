@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>Reverse Shingles (a la Apple)</title>
+	<script src="../../commons/mootools.v1.11.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="styles.css" type="text/css" media="screen" title="no title" charset="utf-8">	
+	
+	<script type="text/javascript" charset="utf-8">
+	window.addEvent('domready', function(){	
+		var shingles = new Accordion('a.handle', 'div.blah', {
+			opacity: false,
+			// fixedHeight: 150,
+			show: 1
+		}, $('ipodyourlife'));
+		
+		$$('a.handle').addEvent('mouseenter', function() {
+			shingles.display(this.getPrevious());
+		});
+	});
+	</script>
+	
+</head>
+
+<body>
+
+	<h2>Reverse Shingles</h2>
+	<div id="ipodyourlife" class="box">
+		<h2>iPod Your Life</h2>
+		<ul class="drawers shingles" id="ipodyourlife-shingles">
+			<li>
+				<div class='blah'><a href="/ipod/nike/" class="item"><img src="http://images.apple.com/itunes/home/images/ipodyourlife_go.jpg" width="182" height="165" alt="Runner with Nike+iPod" class="photo"></a></div>
+				<a class="handle" href="/ipod/nike/">
+					<strong>Go</strong>
+					<span class="description">You don’t just take your iPod nano on your run. You let it take you. <span class="more">Learn more</span></span>
+
+				</a>
+			</li>
+			<li>
+				<div class='blah'><a href="/ipod/accessories.html" class="item"><img src="http://images.apple.com/itunes/home/images/ipodyourlife_home.png" width="182" height="165" alt="iPod in a dock" class="photo"></a></div>
+				<a class="handle" href="/ipod/accessories.html">
+					<strong>Home</strong>
+					<span class="description">Bring your music and photo library into your living room. Simplify your life. <span class="more">Learn more</span></span>
+
+				</a>
+			</li>
+			<li>
+				<div class='blah'><a href="/ipod/carintegration.html" class="item"><img src="http://images.apple.com/itunes/home/images/ipodyourlife_car.png" width="182" height="165" alt="iPod in a car dashboard" class="photo"></a></div>
+				<a class="handle" href="/ipod/carintegration.html">
+					<strong>Car</strong>
+					<span class="description">Take your music on the road with seamless integration between your car and iPod. <span class="more">Learn more</span></span>
+
+				</a>
+			</li>
+		</ul>
+		<div class="boxcap"></div>
+	</div><!--/macatwork-->
+
+</body>
+</html>
