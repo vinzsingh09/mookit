@@ -1,0 +1,221 @@
+/* center switcher button */
+#CenterSwitcherSwitch {
+	float: right;
+	height: 46px;
+	padding-right: 70px;
+	background: transparent url(switcher_right.gif) right top no-repeat;
+	cursor: pointer;
+}
+a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
+	display: block;
+	padding: 13px 0 16px 25px;
+	background: transparent url(switcher_left.gif) left top no-repeat;
+	font: 15px Arial, Verdana;
+	color: #000;
+	text-decoration: none;
+	outline: 0;
+}
+#CenterSwitcherSwitch.hover {
+	background-position: right bottom;
+}
+.hover a#CenterSwitcherSwitchLink, .hover a:hover#CenterSwitcherSwitchLink {
+	background-position: left bottom;
+}
+
+/* multicenter */
+#multicenter {
+	font-family: Lucida Grande, Arial;
+	font-size: 100%;
+	width: 815px;
+	text-align: left;
+}
+#multicenter img {
+	border: 0;
+}
+
+#multicenter #m_logo {
+	width: 105px;
+	height: 105px;
+	position: absolute;
+	left: 30px;
+	top: 30px;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true', sizingMethod='crop', src='logo.png');
+}
+#multicenter #m_logo[id] {
+	background: transparent url(logo.png) center center no-repeat;		
+}
+
+#multicenter #m_header {
+	height: 17px;
+	background: transparent url(multicenter_top.gif) left bottom no-repeat;	
+}
+#multicenter #m_header #m_close {
+	display: block;
+	width: 23px;
+	height: 23px;
+	background: url(close.gif) center center no-repeat;
+	position: absolute;
+	left: 793px;
+}
+
+#multicenter #m_body {
+	padding: 5px 35px;	
+	width: 745px;
+	background: transparent url(multicenter_body.gif) center top repeat-y;
+}
+
+#multicenter #m_footer {
+	height: 17px;
+	background: transparent url(multicenter_bottom.gif) left top no-repeat;
+}
+
+#multicenter #description {
+	padding: 0 0 0 120px;
+	margin-bottom: 45px;
+}
+
+#multicenter .default {
+	font-size: 12px;
+	color: #c90;
+}
+
+#multicenter .loading {
+	background: transparent url(ajax-loader.gif) center center no-repeat;
+}
+
+#multicenter a {
+	color: #12bfff;
+	text-decoration: none;
+	outline: 0;
+}
+
+#multicenter #centers #m_total {
+	margin: 0 5px;
+	color: #aaa;
+	font-size: 14px;
+	position: relative;
+	top: -20px;
+}
+
+#multicenter #centers #choosecenter {
+	overflow: hidden;
+	margin: 0;
+}
+
+#multicenter #centers #m_scrollcontainer {
+	background: transparent url(scrollbar.gif) center top no-repeat;
+	width: 19px;
+	height: 150px;
+	float: right;
+	position: relative;
+	left: 0 !important;
+	left: -5px;
+}
+
+#multicenter #centers #m_scrollbar {
+	width: 19px;
+	height: 150px;
+}
+
+#multicenter #centers #m_scrolltrack {
+	height: 114px;
+	border: 1px solid green;
+}
+
+#multicenter #centers .m_scroll{
+	height: 18px;
+	width: 18px;
+	position: absolute;
+}
+#multicenter #centers #m_scrollbottom {
+	margin-top: -18px;
+}
+
+#multicenter #centers #m_scroller {
+	margin-top: -1px;
+	padding-top: 30px;
+	background: transparent url(scroller_top.gif) center top no-repeat;
+}
+
+#multicenter #centers #m_scrolltail {
+	/* max height: 120px | min height: 30px */
+	height: 30px;
+	background: transparent url(scroller_bottom.gif) center bottom no-repeat;
+}
+
+#multicenter #centers .menu {
+	border: 1px solid #2c2c2c;
+	height: 148px;
+}
+#multicenter #centers .menu .item {
+	float: left;
+	width: 230px;
+	margin: 2px;
+	border: 1px solid #000;
+	cursor: pointer;
+	overflow: hidden;
+}
+#multicenter #centers .menu .item[id] {
+	width: 235px;
+}
+
+#multicenter #centers .menu .building {
+	background: transparent url(office-building_24.png) 15px center no-repeat;
+	padding: 3px;
+	padding-left: 45px;
+}
+#multicenter #centers .menu .all {
+	background: transparent url(earth_24.png) 15px center no-repeat;
+	padding: 3px;
+	padding-left: 45px;
+}
+#multicenter #centers .menu .active {
+	border: 1px solid #07465d;
+	background: #000 url(active_bg.gif) left top repeat-x;
+}
+#multicenter #centers .menu .hover {
+	border: 1px solid #022;
+	background: #000 url(active_bg.gif) left bottom repeat-x;
+}
+
+#multicenter #centers .menu .item a {
+	font-size: 16px !important;
+	font-size: 15px;
+	display: block;
+	width: 400px;
+}
+#multicenter #centers .menu .item .info {
+	font-size: 10px;
+	color: #aaa;
+}
+
+#multicenter #zoom {
+	margin-top: 25px;
+}
+#multicenter #zoom a {
+	font-size: 11px;
+}
+#multicenter #zoom h2, #multicenter #zoom h3 {
+	display: inline;
+}
+#multicenter #zoom .zoom_block {
+	float: left;
+	width: 280px;
+	margin: 15px 10px 0 0;
+	color: #aaa;
+	font-size: 12px;
+}
+#multicenter #zoom .zoom_block h3 {
+	font-size: 19px;
+}
+#multicenter #zoom .zoom_block div {
+	margin-top: 10px;
+}
+
+#multicenter #zoom #zoom_switcher {
+	width: 129px;
+	height: 129px;
+	background: url(switch_center_button.gif) center center no-repeat;
+	display: block;
+	float: right;
+}

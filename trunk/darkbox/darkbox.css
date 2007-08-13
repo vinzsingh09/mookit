@@ -1,0 +1,28 @@
+.darkbox {
+	color: #eee;
+	/* DO NOT MODIFY BELOW THIS LINE */
+	/* ANY CHANGES TO WIDTH, PADDING, MARGINS, ETC, SHOULD BE DONE IN THE ID STYLE */
+/*	position: fixed;*/
+	position: absolute;
+	overflow: hidden;
+	left: 0;
+	z-index: 100;
+}
+
+#darkbox_overlay {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-color: #000;
+	z-index: 20;
+}
+
+.darkbox_invisible {
+	visibility: hidden;
+}
+
+/* http://manisheriar.com/blog/flash_objects_and_z_index */
+.darkbox_object_tag {
+	position: relative;
+	z-index: 0;
+}
