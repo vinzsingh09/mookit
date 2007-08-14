@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+        <title>Pretty Input</title>
+		<script src="../../commons/mootools.v1.11.js" type="text/javascript" charset="utf-8"></script>
+		<script src="prettyinput.js" type="text/javascript" charset="utf-8"></script>
+		
+		<style type="text/css" media="screen">
+			#globalsearch { width: 163px; height: 38px; position: absolute; top: 0; right: 0; background-position: 100% 0; background-repeat: no-repeat; }
+			#globalsearch.active { background-position: 100% -38px; }
+			#globalsearch input.prettysearch { width:140px; height: 16px; margin-top: 9px; margin-left: 11px; background: url(images/searchfield_repeat.png) center top repeat-x; }
+			#globalsearch .search-wrapper { position: relative; width: 140px; margin-top: 9px; margin-left: 11px; }
+			#globalsearch .search-wrapper input.prettysearch { width: 110px; margin-left: 20px; *margin-top:-1px; *margin-right:-2px; *margin-left:10px; }
+/*			#globalsearch .search-wrapper .left, 
+			#globalsearch .search-wrapper .right { behavior:url/global/scripts/lib/iepngfix.htc); }*/
+			#globalsearch .search-wrapper .left { display: block; position: absolute; left: 0; top: 0; width: 20px; height: 19px; background: url(images/searchfield_leftcap.png) left top no-repeat; }
+			#globalsearch .search-wrapper .right { display: block; position: absolute; right: 0; top: 0; width: 10px; height: 19px; background: url(images/searchfield_rightcap.png) right top no-repeat; }
+			#globalsearch .search-wrapper.empty.blurred input { color: #7E7E7E; }
+			#globalsearch .search-wrapper .reset { position: absolute; width: 11px; height: 11px; overflow:hidden; z-index: 1; right: 4px; top: 4px; background: url(images/close.gif); display: block; cursor: pointer; }
+			#globalsearch .search-wrapper.empty .reset { display: none; }
+			#globalsearch .search-wrapper input.prettysearch { position: absolute; width: 110px; top: 0; right: 10px; background: url(images/searchfield_repeat.png) center top repeat-x; border: 0px; margin: 0; padding: 3px 0 0 0; font: 11px "Lucida Grande", Geneva, Arial, sans-serif; }
+			#globalsearch label .prettyplaceholder { display: none; }
+		</style>
+		
+		<script type="text/javascript" charset="utf-8">
+			window.addEvent('domready', function() {
+				new PrettyInput($('searchtext'));
+			});
+		</script>
+</head>
+
+<body>
+	<div id="globalsearch">
+		<form action="#" method="post" accept-charset="utf-8">
+			<label for="sp-searchtext"><span class="prettyplaceholder">Search</span><input type="search" id="searchtext" class="prettysearch" accesskey="s"></label>
+		</form>		
+	</div>
+</body>
+</html>
