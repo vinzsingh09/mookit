@@ -167,7 +167,6 @@ var Multicenter = {
 		this.fx.totalcenters.start(1);
 		
 		// filter input
-		$('m_input_filter').value = '';
 		$('m_input_filter').addEvent('keyup', function () {
 			if (!Multicenter.filterlocked) {
 				Multicenter.filterlocked = true;	// lock filter down			
@@ -319,6 +318,8 @@ window.addEvent('domready', function() {
 			new Event(e).stop();	// prevents href from firing off 
 			multicenter.close();
 		});
+		
+		new PrettyInput($('m_input_filter'));
 	}
 });
 

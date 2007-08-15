@@ -89,12 +89,24 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 	outline: 0;
 }
 
+#multicenter #m_toolbar {
+	margin-bottom: 10px;
+}
+
+#multicenter #createcenter {
+	display: block;
+	float: left;
+	width: 134px;
+	height: 29px;
+	background: url(create_center_button.gif) center center no-repeat;
+}
+
 #multicenter #centers #m_total {
 	margin: 0 5px;
 	color: #aaa;
 	font-size: 14px;
 	position: relative;
-	top: -10px;
+	top: 5px;
 }
 
 #multicenter #centers #choosecenter {
