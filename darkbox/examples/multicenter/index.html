@@ -8,13 +8,14 @@
 	<title>Multicenter</title>
 	<script src="../../../../commons/mootools.v1.11.compressed.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../../../commons/slimbox.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../prettyinput/prettyinput.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../darkbox.js" type="text/javascript" charset="utf-8"></script>
 	<script src="multicenter.js" type="text/javascript" charset="utf-8"></script>
 	
 	<link rel="stylesheet" href="../../darkbox.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 	<link rel="stylesheet" href="../../../global.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 	<link rel="stylesheet" href="multicenter.css" type="text/css" media="screen" title="no title" charset="utf-8" />
-
+	<link rel="stylesheet" href="../../../prettyinput/prettyinput.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	
 </head>
 
@@ -82,14 +83,14 @@
 			</div> <!-- end #description -->
 		
 			<div id="centers">
-				<div class="floatRight">
-					<input type="text" name="m_input_filter" value="" id="m_input_filter" size="25" />
+				<div id="m_toolbar" class="clearfix">
+					<div class="floatRight">
+						<label><span class="prettyplaceholder">Filter Centers</span><input type="text" name="m_input_filter" value="" id="m_input_filter" class="prettysearch" /></label>
+					</div>
+					<a id="createcenter" href="create_center"></a>
 					<span id="m_total"></span>
-					<a href="create_center">
-						<img src="create_center_button.gif" height="29" width="134"  alt="Create a Center" />
-					</a>
+					<!-- <h2>Choose a Center:</h2> -->
 				</div>
-				<h2>Choose a Center:</h2>
 				
 				<div id="m_scrollcontainer">
 					<div id="m_scrolltop" class="m_scroll"> </div>
