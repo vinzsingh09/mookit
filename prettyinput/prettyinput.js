@@ -1,6 +1,6 @@
 /*
  *  Pretty Input (Mookit)
- *  version 0.2
+ *  version 0.3
  *  Abe Yang <abeyang@cal.berkeley.edu> (c) 2007
  *  required framework: Mootools v. 1.11+
  *
@@ -12,6 +12,8 @@
 /*----------------------------------------------------------------------------------------*/
 
 var PrettyInput = new Class({
+	placeholders: [],
+	
 	// elems: can be one element ( $('search') ) or a collection of elements ( $$('input') )
 	initialize: function(elems) {
 		
@@ -40,51 +42,52 @@ var PrettyInput = new Class({
 		if ($type(elems) != 'array') elems = [elems];
 		
 		elems.each(function(node) {
-			var label = node.getParent();
+			var label = node.getParent(), placeholder = '';
 			if(label.getTag() == 'label') {
 				var placeholder = label.getFirst().innerHTML;
+			}
+			this.placeholders.push(placeholder);
 
-				// clone wrapper; insert node into it
-				var wrap = wrapper.clone();
-				node.replaceWith(wrap);
+			// clone wrapper; insert node into it
+			var wrap = wrapper.clone();
+			node.replaceWith(wrap);
 
-				// good ol' webkit... sigh.
-				if (window.webkit) {
-					node.setProperties({
-						type: 'search',
-						placeholder: placeholder
-					});
-					node.injectInside(wrap);
-				}
-				else {
-					node.setProperty('autocomplete', 'off');
-					node.injectAfter(wrap.getFirst());
-				
-					// add events to node
-					node.addEvents({
-						blur: function() {
-							if (node.value == '') {
-								node.value = placeholder;
-							
-								if (!wrap.hasClass('empty')) wrap.addClass('empty');
-							}
-							wrap.addClass('blurred');
-						},
-					
-						focus: function() {
-							if (node.value == label.getText()) {
-								node.value = '';
-							}
-							wrap.removeClass('blurred');
-						},
-					
-						keyup: function() {
-							if (node.value == '' && !wrap.hasClass('empty')) wrap.addClass('empty');
-							else if (node.value != '') wrap.removeClass('empty');
+			// good ol' webkit... sigh.
+			if (window.webkit) {
+				node.setProperties({
+					type: 'search',
+					placeholder: placeholder
+				});
+				node.injectInside(wrap);
+			}
+			else {
+				node.setProperty('autocomplete', 'off');
+				node.injectAfter(wrap.getFirst());
+			
+				// add events to node
+				node.addEvents({
+					blur: function() {
+						if (node.value == '') {
+							node.value = placeholder;
+						
+							if (!wrap.hasClass('empty')) wrap.addClass('empty');
 						}
-					
-					});
-				}
+						wrap.addClass('blurred');
+					},
+				
+					focus: function() {
+						if (node.value == label.getText()) {
+							node.value = '';
+						}
+						wrap.removeClass('blurred');
+					},
+				
+					keyup: function() {
+						if (node.value == '' && !wrap.hasClass('empty')) wrap.addClass('empty');
+						else if (node.value != '') wrap.removeClass('empty');
+					}
+				
+				});
 				
 				// set reset (if not webkit)
 				if (!window.webkit) this.setReset(wrap.getLast().getFirst(), node);
@@ -109,147 +112,3 @@ var PrettyInput = new Class({
 
 });
 
-// basic node template (all other nodes will be cloned from this -- speed performance)
-/* result:
-	<div class="item">
-		<div class="building">
-			<a href="#"></a>
-			<div class="info"></div>
-		</div>
-	</div>
-*/
-
-/*
-AC.decorateSearchInput = function(field, options) {
-	
-	var searchField = $(field);
-	var standIn = null;
-
-	var results = 0;
-	var placeholder = '';
-	var autosave = '';
-
-	if(options) {
-		
-		if(options.results) { results = options.results; }
-		if(options.placeholder) { placeholder = options.placeholder; }
-		if(options.autosave) { autosave = options.autosave; }
-		
-	}
-	
-	if(AC.Detector.isWebKit()) {
-		
-		searchField.setAttribute('type', 'search');
-		if(!searchField.getAttribute('results')) {
-			searchField.setAttribute('results', results);
-		}
-		
-		if(null != placeholder) {
-			searchField.setAttribute('placeholder', placeholder);
-			searchField.setAttribute('autosave', autosave);
-		}
-		
-	} else {
-		
-		//prevent browser from doing its own autocomplete, threw odd xul 
-		//error on reset sometimes, although this feels a little
-		//heavy handed
-		searchField.setAttribute('autocomplete', 'off');
-		
-		//replace the field with a standin while we create the wrapper
-		//we can't lose the reference to this field as other objects may
-		//have already registered listeners on this field
-		
-		standIn = document.createElement('input');
-		searchField.parentNode.replaceChild(standIn, searchField)
-
-		var left = document.createElement('span');
-		Element.addClassName(left, 'left');
-	
-		var right = document.createElement('span');
-		Element.addClassName(right, 'right');
-		
-		var reset = document.createElement('div');
-		Element.addClassName(reset, 'reset');
-		
-		var wrapper = document.createElement('div');
-		Element.addClassName(wrapper, 'search-wrapper');
-		
-		var alreadyHasPlaceholder = field.value == placeholder;
-		var isEmpty = field.value.length == 0;
-		
-		if (alreadyHasPlaceholder || isEmpty) {
-			searchField.value = placeholder;
-			Element.addClassName(wrapper, 'blurred');
-			Element.addClassName(wrapper, 'empty');
-		}
-	
-		wrapper.appendChild(left);
-		wrapper.appendChild(searchField);
-		wrapper.appendChild(right);
-		wrapper.appendChild(reset);
-	
-		var focus = function() {
-			
-			var blurred = Element.hasClassName(wrapper, 'blurred');
-
-			//need to check for flag AND placeholder lest somebody need to 
-			//search for the placeholder text itself
-			if(searchField.value == placeholder && blurred) {
-				searchField.value = '';
-			}
-			
-			Element.removeClassName(wrapper, 'blurred');
-		}
-		Event.observe(searchField, 'focus', focus);
-		
-		var blur = function() {
-			
-			if(searchField.value == '') {
-				Element.addClassName(wrapper, 'empty');
-				searchField.value = placeholder;
-			}
-			
-			Element.addClassName(wrapper, 'blurred');
-		}
-		Event.observe(searchField, 'blur', blur);
-		
-		
-		var toggleReset = function() {
-			
-			if(searchField.value.length >= 0) {
-				Element.removeClassName(wrapper, 'empty');
-			}
-		}
-		Event.observe(searchField, 'keydown', toggleReset);
-	
-	
-		var resetField = function() {
-			return( function(evt) {
-				
-				var escaped = false;
-				
-				if(evt.type == 'keydown') {
-					if(evt.keyCode != 27) {
-						return; //if it's not escape ignore it
-					} else {
-						escaped = true;
-					}
-				}
-				
-				searchField.blur(); //can't change value while in field
-				searchField.value = '';
-				Element.addClassName(wrapper, 'empty');
-				searchField.focus();
-
-			})
-		}
-		Event.observe(reset, 'mousedown', resetField());
-		Event.observe(searchField, 'keydown', resetField());
-	
-		if (standIn) {
-			standIn.parentNode.replaceChild(wrapper, standIn);
-		}
-		
-	}
-}*/
