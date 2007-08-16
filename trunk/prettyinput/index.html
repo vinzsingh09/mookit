@@ -9,54 +9,11 @@
 		<script src="../../commons/mootools.v1.11.js" type="text/javascript" charset="utf-8"></script>
 		<script src="prettyinput.js" type="text/javascript" charset="utf-8"></script>
 		
+		<link rel="stylesheet" href="prettyinput.css" type="text/css" media="screen" title="no title" charset="utf-8">
 		<style type="text/css" media="screen">
+			body { background: #000;}
 			#globalsearch { width: 163px; height: 38px; position: absolute; top: 0; right: 0; background-position: 100% 0; background-repeat: no-repeat; }
 			#globalsearch.active { background-position: 100% -38px; }
-			input.prettysearch { width:140px; height: 19px; margin-top: 9px; margin-left: 11px; background: url(images/searchfield_repeat.png) center top repeat-x; }
-			.search-wrapper { position: relative; width: 140px; margin-top: 9px; margin-left: 11px; }
-
-/*			.search-wrapper .search-left, 
-			.search-wrapper .search-right { behavior:url/global/scripts/lib/iepngfix.htc); }*/
-			
-			.blurred input.prettysearch { background-position: center top; }
-			.blurred .search-left { background-position: left top; }
-			.blurred .search-right {  background-position: right top; }
-			.search-wrapper.empty.blurred input { color: #7E7E7E; }
-			.search-wrapper .search-reset { position: absolute; width: 11px; height: 11px; overflow:hidden; z-index: 1; right: 8px; top: 7px; background: url(images/close.gif); display: block; cursor: pointer; }
-			.search-wrapper .search-loading { position: absolute; width: 11px; height: 11px; overflow:hidden; z-index: 1; right: 8px; top: 7px; background: url(images/indicator.gif); display: block; }
-			.search-wrapper.empty .search-reset { display: none; }
-
-			input.prettysearch, .search-left, .search-right {
-				display: block; 
-				position: absolute;
-				top: 0;
-				height: 25px;
-				border: 0;
-				margin: 0;
-				padding: 0;
-				background-image: url(images/searchfield.png);
-				background-repeat: no-repeat;
-			}
-			input.prettysearch { 
-				font: 11px "Lucida Grande", Geneva, Arial, sans-serif;
-				background-position: center bottom; 
-				background-repeat: repeat-x; 
-				padding-top: 6px;
-				height: 19px;
-				width: 110px;
-				right: 10px;
-			}
-			.search-left { 
-				background-position: left bottom; 
-				left: 0; 
-				width: 20px;
-			}
-			.search-right { 
-				background-position: right bottom; 
-				right: 0; 
-				width: 10px;
-			}
-			label .prettyplaceholder { display: none; }
 		</style>
 		
 		<script type="text/javascript" charset="utf-8">
@@ -70,6 +27,7 @@
 	<div id="globalsearch">
 		<form action="#" method="post" accept-charset="utf-8">
 			<label for="searchtext"><span class="prettyplaceholder">Search</span><input type="text" id="searchtext" class="prettysearch" name="q" /></label>
+			<!-- <input type="text" id="searchtext" class="prettysearch" name="q" /> -->
 		</form>		
 	</div>
 </body>
