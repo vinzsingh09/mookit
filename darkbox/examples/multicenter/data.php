@@ -3,9 +3,12 @@
 	$json = '{"multicenter": [';
 	$json .= '{"id": "all_centers", "name": "All Centers", "type": "all", "contacts": 1235204, "admins": 4, "contacts_valid": 98001, "contacts_active": 87531, "date_created": 20050711, "switch_url": "blah.html"}';
 	
+	// $max = getrandmax();
+	$max = 1000000;
+	
 	foreach($names as $name) {
 		$id = str_replace(' ', '_', strtolower($name));
-		$contacts = rand(15, getrandmax());
+		$contacts = rand(15, $max);
 		$valid = rand(0, $contacts);
 		$active = rand(0, $valid);
 		
