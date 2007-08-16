@@ -6,19 +6,26 @@
 	background: transparent url(switcher_right.gif) right top no-repeat;
 	cursor: pointer;
 }
+#CenterSwitcherSwitch div {
+	background: transparent url(switcher_left.gif) left top no-repeat;	
+}
 a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 	display: block;
-	padding: 13px 0 16px 25px;
-	background: transparent url(switcher_left.gif) left top no-repeat;
+	padding: 13px 0 16px 40px;
+	background: url(office-building_24_white.gif) 13px center no-repeat;
 	font: 15px Arial, Verdana;
 	color: #000;
 	text-decoration: none;
 	outline: 0;
 }
+.all a#CenterSwitcherSwitchLink, .all a:hover#CenterSwitcherSwitchLink {
+	background-image: url(earth_24_white.gif);
+}
+
 #CenterSwitcherSwitch.hover {
 	background-position: right bottom;
 }
-.hover a#CenterSwitcherSwitchLink, .hover a:hover#CenterSwitcherSwitchLink {
+#CenterSwitcherSwitch.hover div {
 	background-position: left bottom;
 }
 
@@ -174,10 +181,10 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 #multicenter #centers .menu .building {
 	padding: 3px;
 	padding-left: 45px;
-	background: transparent url(office-building_24.png) 15px center no-repeat;
+	background: transparent url(office-building_24_black.gif) 15px center no-repeat;
 }
 #multicenter #centers .menu .all {
-	background: transparent url(earth_24.png) 15px center no-repeat;
+	background: transparent url(earth_24_black.gif) 15px center no-repeat;
 	padding: 3px;
 	padding-left: 45px;
 }
@@ -203,7 +210,13 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 
 #multicenter #zoom {
 	margin-top: 25px;
+	background: url(office-building_32_black.gif) left top no-repeat;
+	padding-left: 38px;
 }
+#multicenter #zoom.all {
+	background-image: url(earth_32_black.gif);
+}
+
 #multicenter #zoom a {
 	font-size: 11px;
 }
@@ -212,7 +225,7 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 }
 #multicenter #zoom .zoom_block {
 	float: left;
-	width: 280px;
+	width: 270px;
 	margin: 15px 10px 0 0;
 	color: #aaa;
 	font-size: 12px;

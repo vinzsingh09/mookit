@@ -11,6 +11,7 @@ var Multicenter = {
 	},
 	filterlocked: false,
 	centerhash: {},
+	search_placeholder: '',
 	// hash template
 	hashinfo: $H({type: '', id: '', name: '', contacts: 0, admins: 0, contacts_valid: 0, contacts_active: 0, date_created: 0, switch_url: '#'}),
 
@@ -171,7 +172,7 @@ var Multicenter = {
 			if (!Multicenter.filterlocked) {
 				Multicenter.filterlocked = true;	// lock filter down			
 				Multicenter.filter.delay(400);
-			}			
+			}
 		});
 		
 		// turn global hash into $H
@@ -186,6 +187,12 @@ var Multicenter = {
 	// prereq: node exists
 	getCenterInfo: function(id) {
 		var h = this.centerhash.get(id);
+		
+		// update icon
+		if (h.type == 'all' && !$('zoom').hasClass('all')) $('zoom').addClass('all');
+		else $('zoom').removeClass('all');
+		
+		// update text
 		var unixdate = String(h.date_created);
 		unixdate = unixdate.substring(4,6) + '/' + unixdate.substr(6) + '/' + unixdate.substring(0, 4);
 		$('zoom_name').setText(h.name + ' ');
@@ -204,12 +211,12 @@ var Multicenter = {
 	// filter centers as you type
 	// TODO: update scroll bar
 	filter: function() {
-		var search = $('m_input_filter').getValue();
+		var search = $('m_input_filter').value;
 		var width = (window.ie) ? 230 : 235;
 		Multicenter.centerhash.each(function(center) {
 			// found!
-			if (search=='' || center.name.test('\\b' + search, 'i')) {
-				Multicenter.scrollbar.set(0);	// scroll to top
+			if (search=='' || search==Multicenter.search_placeholder || center.name.test('\\b' + search, 'i')) {
+				if (Multicenter.scrollbar) Multicenter.scrollbar.set(0);	// scroll to top
 				center.fx.start({width:width, margin:2, 'border-width':1, opacity:1});
 			}
 			// not found - disappear
@@ -217,7 +224,7 @@ var Multicenter = {
 				center.fx.start({width:0, margin: 0, 'border-width':0, opacity:0});
 			}
 		});
-/*		if (console) console.log(search);*/
+/*		if (console) console.log('search: ' + search);*/
 		Multicenter.filterlocked = false;	// release lock
 		
 	}, // end filter()
@@ -234,6 +241,16 @@ var Multicenter = {
 		this.fx.zoom = new Fx.Slide('zoom').hide();
 	} // end initialize()
 };
+
+var PrettyFilter = PrettyInput.extend({
+	setReset: function(reset, node) {
+		reset.addEvent('click', function() {
+			node.value = '';
+			node.fireEvent('blur');
+			Multicenter.filter();
+		});
+	} // end setReset
+});
 
 String.extend({
 	// prettify integers
@@ -313,13 +330,16 @@ window.addEvent('domready', function() {
 				$('CenterSwitcherSwitch').removeClass('hover');
 			}
 		});
+		
+		$('CenterSwitcherSwitchLink').setText($('CenterSwitcherSwitchLink').getText().truncate(40));
 	
 		$('m_close').addEvent('click', function(e) {
 			new Event(e).stop();	// prevents href from firing off 
 			multicenter.close();
 		});
 		
-		new PrettyInput($('m_input_filter'));
+		var prettyfilter = new PrettyFilter($('m_input_filter'));
+		Multicenter.search_placeholder = prettyfilter.placeholders[0];
 	}
 });
 
