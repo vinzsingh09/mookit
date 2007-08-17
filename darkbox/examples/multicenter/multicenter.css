@@ -230,6 +230,11 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 	color: #aaa;
 	font-size: 12px;
 }
+#multicenter #zoom #zoom_allcenters_info.zoom_block {
+	width: 500px;
+	margin: 0;
+}
+
 #multicenter #zoom .zoom_block h3 {
 	font-size: 19px;
 }
