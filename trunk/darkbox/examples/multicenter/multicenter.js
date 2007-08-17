@@ -85,7 +85,7 @@ var Multicenter = {
 
 	}, // end setupScrollbar()
 	
-	setupCenters: function(json) {
+	setupCenters: function(centers) {
 		// remove loading image
 		$('choosecenter').removeClass('loading');
 
@@ -105,7 +105,7 @@ var Multicenter = {
 
 		// create html nodes from json
 		var totalcenters = 0;
-		json.multicenter.each(function(item) {
+		centers.each(function(item) {
 			var node = wrapper.clone();
 			var type = node.getFirst();
 			var link = type.getFirst();
@@ -114,11 +114,15 @@ var Multicenter = {
 			// modify node based on item properties
 			node.setProperty('id', 'zm_' + item.id);
 			link.setText(item.name.truncate(20));
-			info.setText(item.contacts.toPrettyInt() + ' contact'.pluralize(item.contacts));
-
-			// conditionals
-			if (item.type == 'all') type.setProperty('class', 'all');
-			else totalcenters++;
+			if (item.type == 'all') {
+				type.setProperty('class', 'all');
+			}
+			else {
+				info.setText(item.contacts.toPrettyInt() + ' contact'.pluralize(item.contacts));
+				totalcenters++;
+			}
+			
+			// other conditionals
 			if (item['default']) new Element('span', { 'class': 'default' }).setText(' DEFAULT').injectAfter(link);
 			if (item.current) node.addClass('active');
 			
@@ -161,7 +165,7 @@ var Multicenter = {
 			// insert node to DOM
 			node.injectInside('choosecenter');
 			
-		}); // end json.multicenter.each()
+		}); // end centers.each()
 		
 		// update total count in darkbox and show
 		$('m_total').setText('center'.pluralize(totalcenters, true));
@@ -189,19 +193,35 @@ var Multicenter = {
 		var h = this.centerhash.get(id);
 		
 		// update icon
-		if (h.type == 'all' && !$('zoom').hasClass('all')) $('zoom').addClass('all');
-		else $('zoom').removeClass('all');
+		if (h.type == 'all') {	// type all
+			// logic: what/not to show
+			if (!$('zoom').hasClass('all')) $('zoom').addClass('all');
+			$('zoom_rename').hide();
+			$('zoom_allcenters_info').show();
+			$('zoom_contacts_info').hide();
+
+			// update text
+			$('zoom_name').setText(h.name + ' have been selected');
+		} 
+		else {	// type building (or otherwise)
+			// logic: what/not to show
+			$('zoom').removeClass('all');
+			$('zoom_rename').show();
+			$('zoom_allcenters_info').hide();
+			$('zoom_contacts_info').show();
+			
+			// update text
+			var unixdate = String(h.date_created);
+			unixdate = unixdate.substring(4,6) + '/' + unixdate.substr(6) + '/' + unixdate.substring(0, 4);
+			$('zoom_name').setText(h.name + ' ');
+			$('zoom_contacts_num').setText(h.contacts.toPrettyInt() + ' contact'.pluralize(h.contacts));
+			$('zoom_contacts_valid').setText((h.contacts_valid/h.contacts).toPercent() + ' ');
+			$('zoom_contacts_active').setText((h.contacts_active/h.contacts).toPercent() + ' ');
+			$('zoom_date').setText(unixdate);
+			$('zoom_admins').setText(h.admins.toPrettyInt() + ' administrator'.pluralize(h.admins) + ' ');
+			$('zoom_switcher').href = h.switch_url || '#';
+		}
 		
-		// update text
-		var unixdate = String(h.date_created);
-		unixdate = unixdate.substring(4,6) + '/' + unixdate.substr(6) + '/' + unixdate.substring(0, 4);
-		$('zoom_name').setText(h.name + ' ');
-		$('zoom_contacts_num').setText(h.contacts.toPrettyInt() + ' contact'.pluralize(h.contacts));
-		$('zoom_contacts_valid').setText((h.contacts_valid/h.contacts).toPercent() + ' ');
-		$('zoom_contacts_active').setText((h.contacts_active/h.contacts).toPercent() + ' ');
-		$('zoom_date').setText(unixdate);
-		$('zoom_admins').setText(h.admins.toPrettyInt() + ' administrator'.pluralize(h.admins) + ' ');
-		$('zoom_switcher').href = h.switch_url || '#';
 		
 		// slide #zoom in if it's the first time
 		if ($('zoom').getStyle('margin-top').toInt() < 0) this.fx.zoom.slideIn();
@@ -230,8 +250,14 @@ var Multicenter = {
 	}, // end filter()
 	
 	setup: function(json) {
-		this.setupCenters(json);
+		var mc = json.multicenter;
+		
+		// set up elements
+		this.setupCenters(mc.centers);
 		this.setupScrollbar();
+		
+		// update elements
+		$('createcenter').setProperty('href', mc.create_url);
 	}, // end setup()
 	
 	initialize: function() {
@@ -250,56 +276,6 @@ var PrettyFilter = PrettyInput.extend({
 			Multicenter.filter();
 		});
 	} // end setReset
-});
-
-String.extend({
-	// prettify integers
-	// default: commas separate every 3 digits (from the right)
-	// ex: "1234567" => "1,234,567"
-	toPrettyInt: function(ch, digits) {
-		if (!ch) ch = ',';
-		if (!digits) digits = 3;
-		
-		var i = this.toInt();	// first, make sure it's an int
-		if (!i) return i;		// if i is not an int, return it (NaN)
-		
-		var s = String(i);
-		// TODO: this can be optimized; use .substr()
-		var newstr = '';
-		var separator = '';
-		for (var j=s.length-1, k=1; j>=0; j--, k++) {
-			separator = (k % digits == 0 && j != 0) ? ch : '';
-			newstr = separator + s.charAt(j) + newstr;
-		}
-		
-		return newstr;
-	},
-	
-	// dummy way of pluralizing: adds an 's' to str if plural
-	pluralize: function(num, printnum) {
-		var returnstr = (printnum) ? num + ' ' + this : this;
-		return (num==1) ? returnstr : returnstr + 's';
-	},
-	
-	truncate: function(length, chars) {
-		if (!chars) chars = '...';
-		 return (length < this.length) ? this.substring(0, length) + chars : this;
-	}
-});
-
-Number.extend({
-	// look at String.toPrettyInt()
-	toPrettyInt: function(ch, digits) {
-		return String(this).toPrettyInt(ch, digits);
-	},
-	
-	// converts to percent
-	// (.25).toPercent() => '25%'
-	toPercent: function(precision) {
-		var r = (this * 100).round(precision);
-		if (!$chk(r)) r = 0;	// return 0 if NaN
-		return r + '%';
-	}
 });
 
 window.addEvent('domready', function() {
