@@ -46,10 +46,7 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 	position: absolute;
 	left: 30px;
 	top: 30px;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled='true', sizingMethod='crop', src='logo.png');
-}
-#multicenter #m_logo[id] {
-	background: transparent url(logo.png) center center no-repeat;		
+	background: transparent url(logo.gif) center center no-repeat;
 }
 
 #multicenter #m_header {
@@ -119,6 +116,11 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 #multicenter #centers #choosecenter {
 	overflow: hidden;
 	margin: 0;
+}
+#multicenter #centers .error {
+	color: #c00;
+	text-align: center;
+	margin: 30px;
 }
 
 #multicenter #centers #m_scrollcontainer {
@@ -234,6 +236,12 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 	width: 500px;
 	margin: 0;
 }
+#multicenter #zoom #zoom_allcenters_info a {
+	background: url(help2_16_black.gif) left center no-repeat;
+	padding-left: 20px;
+	display: block;
+	height: 16px;
+}
 
 #multicenter #zoom .zoom_block h3 {
 	font-size: 19px;
@@ -248,4 +256,7 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 	background: url(switch_center_button.gif) center center no-repeat;
 	display: block;
 	float: right;
+}
+#multicenter #zoom.all #zoom_switcher {
+	background-image: url(switch_all_button.gif);
 }
