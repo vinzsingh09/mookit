@@ -86,9 +86,6 @@ var Multicenter = {
 	}, // end setupScrollbar()
 	
 	setupCenters: function(centers) {
-		// remove loading image
-		$('choosecenter').removeClass('loading');
-
 		// basic node template (all other nodes will be cloned from this -- speed performance)
 		/* result:
 			<div class="item">
@@ -213,12 +210,12 @@ var Multicenter = {
 			// update text
 			var unixdate = String(h.date_created);
 			unixdate = unixdate.substring(4,6) + '/' + unixdate.substr(6) + '/' + unixdate.substring(0, 4);
-			$('zoom_name').setText(h.name + ' ');
+			$('zoom_name').setText(h.name.truncate(45) + ' ');
 			$('zoom_contacts_num').setText(h.contacts.toPrettyInt() + ' contact'.pluralize(h.contacts));
 			$('zoom_contacts_valid').setText((h.contacts_valid/h.contacts).toPercent() + ' ');
 			$('zoom_contacts_active').setText((h.contacts_active/h.contacts).toPercent() + ' ');
 			$('zoom_date').setText(unixdate);
-			$('zoom_admins').setText(h.admins.toPrettyInt() + ' administrator'.pluralize(h.admins) + ' ');
+			$('zoom_admins').setText(h.admins.toPrettyInt() + ' admin'.pluralize(h.admins) + ' ');
 			$('zoom_switcher').href = h.switch_url || '#';
 		}
 		
@@ -233,7 +230,8 @@ var Multicenter = {
 	filter: function() {
 		var search = $('m_input_filter').value;
 		var width = (window.ie) ? 230 : 235;
-		Multicenter.centerhash.each(function(center) {
+
+		Multicenter.centerhash.each(function(center) {		
 			// found!
 			if (search=='' || search==Multicenter.search_placeholder || center.name.test('\\b' + search, 'i')) {
 				if (Multicenter.scrollbar) Multicenter.scrollbar.set(0);	// scroll to top
@@ -244,13 +242,21 @@ var Multicenter = {
 				center.fx.start({width:0, margin: 0, 'border-width':0, opacity:0});
 			}
 		});
+
 /*		if (console) console.log('search: ' + search);*/
 		Multicenter.filterlocked = false;	// release lock
 		
 	}, // end filter()
 	
-	setup: function(json) {
-		var mc = json.multicenter;
+	setup: function(mc) {
+		// remove loading image
+		$('choosecenter').removeClass('loading');
+
+		// test if mc is a true json
+		if (mc === false) {
+			$('choosecenter').setHTML('<div class="error">Your session has timed out. <br />Please log out and log back in.</br>');
+			return;
+		}
 		
 		// set up elements
 		this.setupCenters(mc.centers);
@@ -277,6 +283,19 @@ var PrettyFilter = PrettyInput.extend({
 		});
 	} // end setReset
 });
+
+// modify Json.evaluate
+Json.evaluate = function(str, secure) {
+	var o = '';
+	if (($type(str) != 'string') || (secure && !str.test(/^("(\\.|[^"\\\n\r])*?"|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/)))  {
+		o = null;
+	}
+	else {
+		if (str.test('DOCTYPE')) o = false;
+		else o = eval('(' + str + ')');
+	}
+	return o;
+}
 
 window.addEvent('domready', function() {
 	var url = $('CenterSwitcherSwitchLink') ? $('CenterSwitcherSwitchLink').name : '';
@@ -316,6 +335,7 @@ window.addEvent('domready', function() {
 		
 		var prettyfilter = new PrettyFilter($('m_input_filter'));
 		Multicenter.search_placeholder = prettyfilter.placeholders[0];
+
 	}
 });
 
