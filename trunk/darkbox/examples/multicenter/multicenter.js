@@ -60,11 +60,11 @@ var Multicenter = {
 			// addEvents
 			
 			$('m_scrolltop').addEvent('click', function(e) {
-				this.scrollInc(-150, diff);
+				this.scrollInc(-142, diff);
 			}.bind(this));
 			
 			$('m_scrollbottom').addEvent('click', function(e) {
-				this.scrollInc(150, diff);
+				this.scrollInc(142, diff);
 			}.bind(this));
 			
 			$('choosecenter').addEvent('mousewheel', function(e) {
@@ -189,10 +189,9 @@ var Multicenter = {
 	getCenterInfo: function(id) {
 		var h = this.centerhash.get(id);
 		
-		// update icon
 		if (h.type == 'all') {	// type all
 			// logic: what/not to show
-			if (!$('zoom').hasClass('all')) $('zoom').addClass('all');
+			if (!$('zoom').hasClass('all')) $('zoom').addClass('all');		// update icon
 			$('zoom_rename').hide();
 			$('zoom_allcenters_info').show();
 			$('zoom_contacts_info').hide();
@@ -216,9 +215,8 @@ var Multicenter = {
 			$('zoom_contacts_active').setText((h.contacts_active/h.contacts).toPercent() + ' ');
 			$('zoom_date').setText(unixdate);
 			$('zoom_admins').setText(h.admins.toPrettyInt() + ' admin'.pluralize(h.admins) + ' ');
-			$('zoom_switcher').href = h.switch_url || '#';
 		}
-		
+		$('zoom_switcher').href = h.switch_url || '#';		// update url
 		
 		// slide #zoom in if it's the first time
 		if ($('zoom').getStyle('margin-top').toInt() < 0) this.fx.zoom.slideIn();
