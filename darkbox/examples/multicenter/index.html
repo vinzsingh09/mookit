@@ -24,7 +24,7 @@
 
 	<br />
 	<div id="CenterSwitcherSwitch"><div>
-		<a id="CenterSwitcherSwitchLink" name="data.php" href="#">This is a really really long name, so long that it's unfathomable Dept</a>
+		<a id="CenterSwitcherSwitchLink" name="data.php" href="#">THIS IS A REALLY REALLY LONG NAME, SO LONG THAT IT'S UNFATHOMABLE DEPT</a>
 	</div></div>
 
 	<br /><a href="http://users.edpnet.be/cbeyls/digitalia/images/25.jpg" rel="lightbox" title="The Gilles, one of the Belgian cultural traditions. Here at Barvaux."><img src="http://users.edpnet.be/cbeyls/digitalia/images/25t.jpg" alt="Gilles at Barvaux" /></a><br />
@@ -38,15 +38,15 @@
 		<option value="0">Blah</option>
 	</select>
 
-<!-->
+
 <div class="darkbox_object_tag">
-<object id="object" width="425" height="350" wmode="transparent">
+<!-- <object id="object" width="425" height="350" wmode="transparent">
 	<param name="movie" value="http://www.youtube.com/v/G_OyDww0feE" />
-	<param name="wmode" value="transparent" />
-	<embed id="embed" src="http://www.youtube.com/v/G_OyDww0feE" type="application/x-shockwave-flash" width="425" height="350" wmode="transparent"></embed>
-</object>
+	<param name="wmode" value="transparent" /> -->
+	<embed id="embed" src="http://www.youtube.com/v/G_OyDww0feE" type="application/x-shockwave-flash" width="425" height="350"></embed>
+<!-- </object> -->
 </div>
--->
+
 	
 	<br />
 	<b>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</b>
@@ -88,7 +88,7 @@
 						<label><span class="prettyplaceholder">Filter Centers</span><input type="text" name="m_input_filter" value="" id="m_input_filter" class="prettysearch" /></label>
 					</div>
 					<a id="createcenter" href="create_center"></a>
-					<span id="m_total"></span>
+					<span id="m_subtotal" class="total"></span><span id="m_total" class="total"></span>
 					<!-- <h2>Choose a Center:</h2> -->
 				</div>
 				
@@ -109,7 +109,16 @@
 			<div id="zoom" class="clearfix">
 				<a id="zoom_switcher" href="#"> </a>
 				<h2 id="zoom_name"> </h2>
-				<a id="zoom_rename" href="#">(rename)</a>
+				<div id="zoom_rename">
+					<form action="ajaxpost.php" method="post" name="form_rename" id="form_rename">
+						<input type="hidden" name="zoom_current_id" value="" id="zoom_current_id">
+						<input type="text" name="zoom_rename_input" value="" id="zoom_rename_input" />
+						<button type="submit" name="zoom_rename_submit" id="zoom_rename_submit">Save</button>
+					</form>
+				</div>
+
+				<a id="zoom_edit_link">(edit)</a>
+				<a id="zoom_rename_link" href="#" style="display:none;">(rename)</a> <span id="zoom_cancel">or <a id="zoom_cancel_link" href="#">Cancel</a></span><img id="zoom_indicator" src="indicator_16_black.gif" alt="loading" height="16" width="16" />
 				<div id="zoom_contacts_info">
 					<div class="zoom_block">
 						<h3><span id="zoom_contacts_num">contacts</span></h3>
@@ -119,10 +128,6 @@
 							<br />Created on <span id="zoom_date"> </span>
 						</div>
 					</div>
-					<div class="zoom_block">
-						<h3><span id="zoom_admins">admins</span></h3>
-						<a href="#">(manage)</a>
-					</div>					
 				</div>
 				<div id="zoom_allcenters_info" class="zoom_block">
 					<p>This allows you to have campaigns and contacts across all your Centers.  Using security categories, you can also create campaigns and assign it to any Center.</p>

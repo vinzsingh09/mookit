@@ -105,8 +105,8 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 	background: url(create_center_button.gif) center center no-repeat;
 }
 
-#multicenter #centers #m_total {
-	margin: 0 5px;
+#multicenter #centers .total {
+	margin-left: 5px;
 	color: #aaa;
 	font-size: 14px;
 	position: relative;
@@ -248,6 +248,21 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 }
 #multicenter #zoom .zoom_block div {
 	margin-top: 10px;
+}
+
+#multicenter #zoom #zoom_rename { float: left; }
+#multicenter #zoom #zoom_rename input, #multicenter #zoom #zoom_rename button {
+	height: 24px; 
+	font-size: 18px;
+}
+#multicenter #zoom #zoom_rename #zoom_rename_input {
+	width: 400px;
+}
+#multicenter #zoom #zoom_cancel { 
+	margin-left: 5px;
+	font-size: 11px; 
+	position: relative;
+	top: 5px;
 }
 
 #multicenter #zoom #zoom_switcher {
