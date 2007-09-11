@@ -13,7 +13,8 @@ var Multicenter = {
 	centerhash: {},
 	search_placeholder: '',
 	// hash template
-	hashinfo: $H({type: '', id: '', name: '', contacts: 0, admins: 0, contacts_valid: 0, contacts_active: 0, date_created: 0, switch_url: '#'}),
+	hashinfo: $H({type: '', id: '', name: '', contacts: 0, admins: 0, contacts_valid: 0, contacts_active: 0, date_created: 0, switch_url: '#', edit_url: '#'}),
+	current_id: '',
 
 	scrollInc: function (inc, max) {
 		// set flag
@@ -187,12 +188,17 @@ var Multicenter = {
 	
 	// prereq: node exists
 	getCenterInfo: function(id) {
+		this.current_id = id;
 		var h = this.centerhash.get(id);
+		
+/*		this.cancelRename();	// this needs to be fired before anything else*/
+		$('zoom_switcher').href = h.switch_url || '#';		// update url
 		
 		if (h.type == 'all') {	// type all
 			// logic: what/not to show
 			if (!$('zoom').hasClass('all')) $('zoom').addClass('all');		// update icon
-			$('zoom_rename').hide();
+/*			$('zoom_rename_link').hide();*/
+			$('zoom_edit_link').hide();
 			$('zoom_allcenters_info').show();
 			$('zoom_contacts_info').hide();
 
@@ -202,38 +208,53 @@ var Multicenter = {
 		else {	// type building (or otherwise)
 			// logic: what/not to show
 			$('zoom').removeClass('all');
-			$('zoom_rename').show();
 			$('zoom_allcenters_info').hide();
 			$('zoom_contacts_info').show();
+			$('zoom_edit_link').show();
+			$('zoom_edit_link').href = h.edit_url || '#';
 			
 			// update text
 			var unixdate = String(h.date_created);
 			unixdate = unixdate.substring(4,6) + '/' + unixdate.substr(6) + '/' + unixdate.substring(0, 4);
-			$('zoom_name').setText(h.name.truncate(45) + ' ');
+			$('zoom_name').setText(h.name.truncate(37) + ' ');
 			$('zoom_contacts_num').setText(h.contacts.toPrettyInt() + ' contact'.pluralize(h.contacts));
 			$('zoom_contacts_valid').setText((h.contacts_valid/h.contacts).toPercent() + ' ');
 			$('zoom_contacts_active').setText((h.contacts_active/h.contacts).toPercent() + ' ');
 			$('zoom_date').setText(unixdate);
-			$('zoom_admins').setText(h.admins.toPrettyInt() + ' admin'.pluralize(h.admins) + ' ');
 		}
-		$('zoom_switcher').href = h.switch_url || '#';		// update url
 		
 		// slide #zoom in if it's the first time
 		if ($('zoom').getStyle('margin-top').toInt() < 0) this.fx.zoom.slideIn();
 		
 	}, // end getCenterInfo()
 	
+	updateCenterName: function(id, newname) {
+		//...
+	}, // end updateCenterName()
+	
+	cancelRename: function() {
+		$('zoom_indicator').hide();
+		
+		$('zoom_name').show();
+		$('zoom_rename').hide();
+		
+		$('zoom_rename_link').show();
+		$('zoom_cancel').hide();
+	}, // end cancelRename()
+	
 	// filter centers as you type
 	// TODO: update scroll bar
 	filter: function() {
 		var search = $('m_input_filter').value;
 		var width = (window.ie) ? 230 : 235;
-
+		var subtotal = 0;
+		
 		Multicenter.centerhash.each(function(center) {		
 			// found!
-			if (search=='' || search==Multicenter.search_placeholder || center.name.test('\\b' + search, 'i')) {
+			if (search=='' || search==Multicenter.search_placeholder || center.name.replace('_', ' ', 'g').test('\\b' + search, 'i')) {
 				if (Multicenter.scrollbar) Multicenter.scrollbar.set(0);	// scroll to top
 				center.fx.start({width:width, margin:2, 'border-width':1, opacity:1});
+				if (center.type == 'center') subtotal++;
 			}
 			// not found - disappear
 			else {
@@ -242,6 +263,8 @@ var Multicenter = {
 		});
 
 /*		if (console) console.log('search: ' + search);*/
+		if (search=='' || search==Multicenter.search_placeholder) $('m_subtotal').empty();
+		else $('m_subtotal').setText(subtotal + ' of');
 		Multicenter.filterlocked = false;	// release lock
 		
 	}, // end filter()
@@ -260,13 +283,66 @@ var Multicenter = {
 		this.setupCenters(mc.centers);
 		this.setupScrollbar();
 		
-		// update elements
+		// update other elements
 		$('createcenter').setProperty('href', mc.create_url);
+		$('zoom_rename_link').addEvent('click', function(e) {
+			new Event(e).stop();
+			$('zoom_name').hide();
+			$('zoom_rename').show();
+			$('zoom_rename_input').value = this.centerhash.get(this.current_id).name;
+			
+			$('zoom_rename_link').hide();
+			$('zoom_cancel').show();
+		}.bind(this));
+		$('zoom_cancel_link').addEvent('click', function(e) {
+			new Event(e).stop();
+			this.cancelRename();
+		}.bind(this));
+		
+		// upon clicking submit
+		$('form_rename').addEvent('submit', function(e) {
+			new Event(e).stop();
+			// update form elements
+			$('zoom_rename_submit').setProperty('disabled', 'disabled');
+			$('zoom_cancel').hide();
+			$('zoom_indicator').show();
+			
+			// update hidden field
+			var center = Multicenter.centerhash.get(Multicenter.current_id);
+			$('zoom_current_id').value = center.id;
+			
+			// TODO: add/remove indicator
+			// TODO: add error checks
+			this.send({
+				onSuccess: function(response) {
+					eval('response = ' + response);
+					if (response.type == 'success') {
+						// update each "name" to the renamed one
+						var rename = $('zoom_rename_input').value;
+						$('zoom_name').setText(rename.truncate(37) + ' ');
+						$(Multicenter.current_id).getFirst().getFirst().setText(rename.truncate(20));
+						center.name = rename;
+
+						// update form elements
+						$('zoom_rename_submit').setProperty('disabled', '');
+						Multicenter.cancelRename();	
+					}
+					// error response
+					else {
+						// ...
+					}
+				}
+			});
+		});
+		
 	}, // end setup()
 	
 	initialize: function() {
 		// hide certain elements first
 		$('m_scrollcontainer').hide();
+		$('zoom_rename').hide();
+		$('zoom_cancel').hide();
+		$('zoom_indicator').hide();
 		this.fx.totalcenters = $('m_total').effect('opacity').hide();
 		this.fx.zoom = new Fx.Slide('zoom').hide();
 	} // end initialize()
@@ -324,13 +400,17 @@ window.addEvent('domready', function() {
 			}
 		});
 		
-		$('CenterSwitcherSwitchLink').setText($('CenterSwitcherSwitchLink').getText().truncate(40));
+		$('CenterSwitcherSwitchLink').setText($('CenterSwitcherSwitchLink').getText().truncate(29));
 	
 		$('m_close').addEvent('click', function(e) {
 			new Event(e).stop();	// prevents href from firing off 
 			multicenter.close();
 		});
 		
+/*		$$('embed').each(function(elem) {
+			elem.setProperty('wmode', 'transparent');
+		});
+*/		
 		var prettyfilter = new PrettyFilter($('m_input_filter'));
 		Multicenter.search_placeholder = prettyfilter.placeholders[0];
 
