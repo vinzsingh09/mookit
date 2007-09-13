@@ -12,7 +12,7 @@
 		$valid = rand(0, $contacts);
 		$active = rand(0, $valid);
 		
-		$str = ',{"id": "' . $id . '", "name": "' . $name . '", "type": "center", "contacts": ' . $contacts . ', "admins": '. $valid . ', "contacts_valid": ' . $valid . ', "contacts_active": ' . $active . ', "date_created": 20051013, "switch_url": "' . $id . '_switch.html", "edit_url": "' . $id . '_edit.html"}';
+		$str = ',{"id": "' . $id . '", "name": "' . $name . '", "type": "center", "contacts": ' . $contacts . ', "admins": '. $valid . ', "contacts_valid": ' . $valid . ', "contacts_active": ' . $active . ', "date_created": 20051013, "switch_url": "' . $id . '_switch.html", "edit_url": "' . $id . '_edit.html", "stats_updated": "20071013 142836"}';
 		$json .= $str;
 	}
 		

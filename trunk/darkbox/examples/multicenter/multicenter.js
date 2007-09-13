@@ -13,7 +13,7 @@ var Multicenter = {
 	centerhash: {},
 	search_placeholder: '',
 	// hash template
-	hashinfo: $H({type: '', id: '', name: '', contacts: 0, admins: 0, contacts_valid: 0, contacts_active: 0, date_created: 0, switch_url: '#', edit_url: '#'}),
+	hashinfo: $H({type: '', id: '', name: '', contacts: 0, admins: 0, contacts_valid: 0, contacts_active: 0, date_created: 0, stats_updated: 0, switch_url: '#', edit_url: '#'}),
 	current_id: '',
 
 	scrollInc: function (inc, max) {
@@ -214,13 +214,16 @@ var Multicenter = {
 			$('zoom_edit_link').href = h.edit_url || '#';
 			
 			// update text
-			var unixdate = String(h.date_created);
-			unixdate = unixdate.substring(4,6) + '/' + unixdate.substr(6) + '/' + unixdate.substring(0, 4);
+			var createdate = String(h.date_created);
+			createdate = createdate.substring(4,6) + '/' + createdate.substr(6) + '/' + createdate.substring(0,4);
+			var updatedate = h.stats_updated;
+			updatedate = updatedate.substring(4,6) + '/' + updatedate.substring(6,8) + '/' + updatedate.substring(2,4) + ', ' + updatedate.substring(9, 11) + ':' + updatedate.substring(11, 13);
 			$('zoom_name').setText(h.name.truncate(37) + ' ');
 			$('zoom_contacts_num').setText(h.contacts.toPrettyInt() + ' contact'.pluralize(h.contacts));
 			$('zoom_contacts_valid').setText((h.contacts_valid/h.contacts).toPercent() + ' ');
 			$('zoom_contacts_active').setText((h.contacts_active/h.contacts).toPercent() + ' ');
-			$('zoom_date').setText(unixdate);
+			$('zoom_date').setText(createdate);
+			$('zoom_statsdate').setText(updatedate);
 		}
 		
 		// slide #zoom in if it's the first time
@@ -284,7 +287,11 @@ var Multicenter = {
 		this.setupScrollbar();
 		
 		// update other elements
-		$('createcenter').setProperty('href', mc.create_url);
+		if (mc.create_url) {
+			$('createcenter').setProperty('href', mc.create_url);
+			$('createcenter').show();
+		}
+		
 		$('zoom_rename_link').addEvent('click', function(e) {
 			new Event(e).stop();
 			$('zoom_name').hide();
@@ -406,6 +413,7 @@ window.addEvent('domready', function() {
 			new Event(e).stop();	// prevents href from firing off 
 			multicenter.close();
 		});
+		$('createcenter').hide();
 		
 /*		$$('embed').each(function(elem) {
 			elem.setProperty('wmode', 'transparent');
