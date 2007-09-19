@@ -204,6 +204,7 @@ var Multicenter = {
 
 			// update text
 			$('zoom_name').setText(h.name + ' have been selected');
+
 		} 
 		else {	// type building (or otherwise)
 			// logic: what/not to show
@@ -217,13 +218,25 @@ var Multicenter = {
 			var createdate = String(h.date_created);
 			createdate = createdate.substring(4,6) + '/' + createdate.substr(6) + '/' + createdate.substring(0,4);
 			var updatedate = h.stats_updated;
-			updatedate = updatedate.substring(4,6) + '/' + updatedate.substring(6,8) + '/' + updatedate.substring(2,4) + ', ' + updatedate.substring(9, 11) + ':' + updatedate.substring(11, 13);
+			if (updatedate) {
+				var updatehour = Number(updatedate.substring(9, 11));
+				var updatesuffix = 'am';
+				if (updatehour > 12) { 
+					updatehour -= 12;
+					updatesuffix = 'pm';
+				}
+				else if (updatehour == 12) updatesuffix = 'pm';
+				else if (updatehour == 0) updatehour = 12;
+				updatedate = updatedate.substring(4,6) + '/' + updatedate.substring(6,8) + '/' + updatedate.substring(2,4) + ', ' + updatehour + ':' + updatedate.substring(11, 13) + updatesuffix;
+				$('zoom_statsdate').setText('Statistics last updated on ' + updatedate);
+			}
+			else $('zoom_statsdate').setText('Statistics not yet updated');
+
 			$('zoom_name').setText(h.name.truncate(37) + ' ');
 			$('zoom_contacts_num').setText(h.contacts.toPrettyInt() + ' contact'.pluralize(h.contacts));
 			$('zoom_contacts_valid').setText((h.contacts_valid/h.contacts).toPercent() + ' ');
 			$('zoom_contacts_active').setText((h.contacts_active/h.contacts).toPercent() + ' ');
 			$('zoom_date').setText(createdate);
-			$('zoom_statsdate').setText(updatedate);
 		}
 		
 		// slide #zoom in if it's the first time

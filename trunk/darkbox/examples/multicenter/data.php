@@ -5,14 +5,19 @@
 	
 	// $max = getrandmax();
 	$max = 1000000;
+	$i = 0;
 	
 	foreach($names as $name) {
 		$id = str_replace(' ', '_', strtolower($name));
 		$contacts = rand(15, $max);
 		$valid = rand(0, $contacts);
 		$active = rand(0, $valid);
+		$j = ($i < 10) ? '0' . $i : $i;
+		$fourdigits = rand(1000, 5999);
+		$i++;
+		if ($i > 23) $i = 0;
 		
-		$str = ',{"id": "' . $id . '", "name": "' . $name . '", "type": "center", "contacts": ' . $contacts . ', "admins": '. $valid . ', "contacts_valid": ' . $valid . ', "contacts_active": ' . $active . ', "date_created": 20051013, "switch_url": "' . $id . '_switch.html", "edit_url": "' . $id . '_edit.html", "stats_updated": "20071013 142836"}';
+		$str = ',{"id": "' . $id . '", "name": "' . $name . '", "type": "center", "contacts": ' . $contacts . ', "admins": '. $valid . ', "contacts_valid": ' . $valid . ', "contacts_active": ' . $active . ', "date_created": 20051013, "switch_url": "' . $id . '_switch.html", "edit_url": "' . $id . '_edit.html", "stats_updated": "20071013 ' . $j . $fourdigits . '"}';
 		$json .= $str;
 	}
 		

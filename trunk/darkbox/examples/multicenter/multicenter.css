@@ -92,6 +92,7 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 	text-decoration: none;
 	outline: 0;
 }
+#multicenter a#m-help { font-size: 12px; }
 
 #multicenter #m_toolbar {
 	margin-bottom: 10px;
@@ -227,7 +228,7 @@ a#CenterSwitcherSwitchLink, a:hover#CenterSwitcherSwitchLink {
 }
 #multicenter #zoom .zoom_block {
 	float: left;
-	width: 270px;
+	width: 280px;
 	margin: 15px 10px 0 0;
 	color: #aaa;
 	font-size: 12px;
