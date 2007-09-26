@@ -363,6 +363,8 @@ var Multicenter = {
 		$('zoom_rename').hide();
 		$('zoom_cancel').hide();
 		$('zoom_indicator').hide();
+		$('m-help').popup();
+		$('zoom_allcenters_help').popup();
 		this.fx.totalcenters = $('m_total').effect('opacity').hide();
 		this.fx.zoom = new Fx.Slide('zoom').hide();
 	} // end initialize()
@@ -391,6 +393,7 @@ Json.evaluate = function(str, secure) {
 	return o;
 }
 
+// attach events once DOM is ready
 window.addEvent('domready', function() {
 	var url = $('CenterSwitcherSwitchLink') ? $('CenterSwitcherSwitchLink').name : '';
 	var url_hash = url ? '?' + $time() : '';
