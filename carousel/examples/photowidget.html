@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>Photowidget</title>
+	<script src="../../../commons/mootools.v1.11.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../carousel.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../carousel.slick.js" type="text/javascript" charset="utf-8"></script>
+	
+	<style type="text/css" media="screen">
+		
+		body {
+			font-family: "Lucida Grande";
+			background: #000;
+		}
+
+		.hover {
+			cursor: pointer;
+			cursor: hand;
+		}
+
+		/* The toolbar for the content box */
+
+		ul.toolbar {
+			height: 9px;
+			text-align: center;
+			list-style: none;
+			margin: 10px auto;
+			padding: 0;
+			clear: both;
+			}
+
+		.toolbar li {
+			float: left;
+			height: 9px;
+			width: 9px;
+			margin-right: 20px;
+			background: url(photowidget/paging_dot.gif);
+			text-indent: -9999px;
+			font-size: 1px;
+			}
+
+		.toolbar li a {
+			display: block;
+			outline: 0;
+			}
+
+		.toolbar li.active {
+			/* border-bottom: 1px solid #f2f2f2; */
+			background-position: left;
+			}
+
+		.toolbar li.inactive {
+			background-position: right;
+			}
+
+		.toolbar li:hover {
+			background-position: center;
+			}
+
+
+		/* The slide-y content box thingy */
+		.frame, #scroller, .section { height: 80px; }
+
+		.frame {
+			overflow: hidden;
+			margin: 0 auto;
+			width: 570px;
+			position: relative;
+			}
+
+		.frame div.arrow {
+			position: absolute;
+			top: 30%;
+			}
+
+		div.arrow  { width: 28px; height: 29px; }
+		div.left { left: 0; background: url(photowidget/arrows_left.gif) center left no-repeat; }
+		div.right { right: 0; background: url(photowidget/arrows_right.gif) center left no-repeat; }
+		div.left:hover { background-position: right; }
+		div.right:hover { background-position: right; }
+		
+		.scroller {
+			width: 500px;
+			margin: 0 auto;	
+			background: #000;
+			overflow: hidden;
+			}
+
+		.section {
+			width: 500px;
+			float: left;
+			}
+
+		.section img {
+			float: left;
+			margin: 1px 3px;
+			border: 1px solid #333;
+			}
+			
+		#p1-content { width: 5280px;}
+		#p1-toolbar { width: 120px;} /* (tabs_num * 30) */
+
+	</style>
+	
+	<script type="text/javascript" charset="utf-8">
+		window.addEvent("domready", function() {
+			var carousel = new SlickCarousel('p1-scroller', '#p1-content .section', {
+				menu_class: 'p1-tab',
+				scroll_right: 'p1-right',
+				scroll_left: 'p1-left',
+				duration: 500,
+				offset: {'x': 0, 'y': 0},
+				transition: Fx.Transitions.Quad.easeInOut
+			});
+		});	
+	</script>
+	
+</head>
+
+<body>
+
+
+	<div class="frame"><!-- Contains the forward/back buttons, hides the scrollbar -->
+
+		<div class="arrow left hover" id="p1-left"></div>
+		
+		<div class="scroller" id="p1-scroller"><!-- Contains the horizontal scrollbar -->
+
+
+			<div id="p1-content"><!-- Very wide to contain all the sections side-by-side -->
+
+
+				<!-- #1 -->
+
+				<div class="section">
+<img src="photowidget/thumbs/117339408_5b48190673_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339430_556dd75f06_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339445_93b6150651_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339462_7bf2336cfa_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339480_a881cca838_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339499_c14f9e066b_s.jpg" width="75" height="75" />
+				</div><!-- end #1 -->
+
+
+				<!-- #2 -->
+
+				<div class="section">
+<img src="photowidget/thumbs/117339524_8f7bea42e2_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339542_92e79efcbf_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339572_0d345733cc_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339613_d987496e14_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339632_20cea91b71_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339656_ac2ab7c133_s.jpg" width="75" height="75" />
+				</div><!-- end #2 -->
+
+
+
+				<!-- #3 -->
+
+				<div class="section">
+<img src="photowidget/thumbs/117339669_fb3cacb9d5_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339679_06a3d74d55_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339694_198279983d_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339717_8785554101_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339742_2020c3de72_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339778_acebbc1277_s.jpg" width="75" height="75" />
+				</div><!-- end #3 -->
+
+
+				<!-- #4 -->
+
+				<div class="section">
+<img src="photowidget/thumbs/117339808_ec275a05c8_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339834_37899c9547_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339857_814c7ae2f7_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339875_595630124b_s.jpg" width="75" height="75" />
+<img src="photowidget/thumbs/117339931_04d7c78278_s.jpg" width="75" height="75" />
+				</div><!-- end #4 -->
+
+			</div><!-- end div#content -->
+
+		</div><!-- end div.scroller -->
+
+		<div class="arrow right hover" id="p1-right"></div>
+
+	</div><!-- end div.frame -->
+
+	<!-- The Toolbar -->
+
+	<ul class="toolbar" id="p1-toolbar">
+		<li id="p1-1" class="hover p1-tab active"><a href="#">1</a></li>
+		<li id="p1-2" class="hover p1-tab inactive"><a href="#">2</a></li>
+		<li id="p1-3" class="hover p1-tab inactive"><a href="#">3</a></li>
+		<li id="p1-4" class="hover p1-tab inactive"><a href="#">4</a></li>
+	</ul>	 
+
+</body>
+</html>
