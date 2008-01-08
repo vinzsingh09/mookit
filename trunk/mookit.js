@@ -1,6 +1,6 @@
 /*
  *  MooKit.js - MooTools++
- *  Abe Yang <abeyang@cal.berkeley.edu> (c) 2007
+ *  Abe Yang <abeyang@cal.berkeley.edu> (c) 2008
  *  required framework: Mootools v. 1.11+
  *
  *  MooKit is freely distributable under the terms of an MIT-style license.
@@ -34,6 +34,27 @@ Element.extend({
 		
 			window.open(this.href, options.name, str);
 		}, this);
+	},
+	
+	// based on browser size
+	// elements: subtract from browser size: ['id1', 'id2', ...] OR 'id1' OR $('id1') OR ''
+	// constant: integer used to subtract from browser size
+	setHeight: function(elements, constant) {
+		var newheight = Window.getHeight();
+		if (elements) {
+			if ($type(elements) != 'array') {
+				// stuff this singular element into an array (of 1)
+				elements = [elements];
+			}
+
+			elements.each(function(node) {
+				newheight -= $(node).offsetHeight;
+			});
+		}
+		
+		if (constant) newheight -= constant;
+
+		this.setStyle('height', newheight);
 	},
 	
 	// following makes Element class more Prototype-esque:
