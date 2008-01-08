@@ -1,7 +1,7 @@
 /*
  *  Darkbox Framework
- *  version 0.22
- *  Abe Yang <abeyang@cal.berkeley.edu> (c) 2007
+ *  version 0.231
+ *  Abe Yang <abeyang@cal.berkeley.edu> (c) 2008
  *  required framework: Mootools v. 1.11+
  *  
  *  Darkbox is freely distributable under the terms of an MIT-style license.
@@ -14,13 +14,14 @@ TODO
 */
 
 var DarkboxInfo = {
-	version: '0.23'
+	version: '0.231'
 };
 
 var Darkbox = new Class({
 	options: {
 		outside_click: true,
 		outside_opacity: .8,
+		set_position: true,
 		fade_duration: 500,
 		remote: {
 			type: 'ajax',	// 'ajax' or 'json'
@@ -35,6 +36,7 @@ var Darkbox = new Class({
 	//		(element id(s) that will trigger darbox to turn on)
 	initialize: function(id, elements, args) {
 		this.id = id;
+		this.isopen = false;
 
 		// update options
 		args.remote = $extend(this.options.remote, args.remote);
@@ -62,18 +64,20 @@ var Darkbox = new Class({
 			overlay: $('darkbox_overlay').effect('opacity', {duration:this.options.fade_duration}).hide()
 		};
 		
-		// attach onclick events to 'elements'
-		if ($type(elements) != 'array') {
-			// stuff this singular element into an array (of 1)
-			elements = [elements];
-		}
+		if (elements) {
+			// attach onclick events to 'elements'
+			if ($type(elements) != 'array') {
+				// stuff this singular element into an array (of 1)
+				elements = [elements];
+			}
 
-		elements.each(function(node) {
-			$(node).addEvent('click', function(e) {
-				new Event(e).stop();	// prevents href from firing off
-				this.open();
-			}.bind(this));			
-		}, this);
+			elements.each(function(node) {
+				$(node).addEvent('click', function(e) {
+					new Event(e).stop();	// prevents href from firing off
+					this.open();
+				}.bind(this));			
+			}, this);
+		}
 
 	}, // end initialize()
 	
@@ -101,16 +105,19 @@ var Darkbox = new Class({
 	
 	position: function() {
 		$('darkbox_overlay').setStyles({'top': 0, 'height': window.getSize().scrollSize.y});
-		// TODO: set to absolute center (from top)
-		$(this.id).setStyles({
-/*			'position': window.ie ? 'absolute' : 'fixed',*/
-			'top': window.getScrollTop() + (window.getHeight() / 15),
-			'left': ((window.getWidth() - $(this.id).getSize().size.x) / 2)
-		});
+		if (this.options.set_position) {
+			// TODO: set to absolute center (from top)
+			$(this.id).setStyles({
+/*				'position': window.ie ? 'absolute' : 'fixed',*/
+				'top': window.getScrollTop() + (window.getHeight() / 15),
+				'left': ((window.getWidth() - $(this.id).getSize().size.x) / 2)
+			});
+		}
 	},
 	
 	setup: function(open_it) {
-
+		this.isopen = open_it;
+		
 		if (window.ie6) {
 			var elements = $$('select');
 			if (open_it) elements.addClass('darkbox_invisible');
@@ -129,17 +136,3 @@ var Darkbox = new Class({
 	}
 });
 
-// make Element class more Prototype-esque
-Element.extend({
-        hide: function() {
-			this.setStyle('display', 'none');
-        },
-
-        show: function() {
-			this.setStyle('display', '');
-        },
-
-        toggle: function() {
-			(this.getStyle('display') == "none") ? this.show() : this.hide();
-        }
-});
