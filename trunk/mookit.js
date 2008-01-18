@@ -48,7 +48,7 @@ Element.extend({
 			}
 
 			elements.each(function(node) {
-				newheight -= $(node).offsetHeight;
+				if ($(node)) newheight -= $(node).offsetHeight;
 			});
 		}
 		
