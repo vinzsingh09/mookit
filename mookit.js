@@ -206,3 +206,8 @@ Number.extend({
 		return r + '%';
 	}
 });
+
+/* Extend window class */
+window.win = (navigator.appVersion.indexOf("Win")!=-1);
+window.mac = (navigator.appVersion.indexOf("Mac")!=-1);
+window.linux = (navigator.appVersion.indexOf("Linux")!=-1)
