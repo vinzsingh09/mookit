@@ -7,6 +7,26 @@
  *  Please visit http://code.google.com/p/mookit/ for more details.
 /*--------------------------------------------------------------------------*/
 
+/* Mookit global */
+mookit = {
+	// uses google analytics - useful for javascript-based webapps
+	// obj can be str ('/gallery/tag/albumname/') or arr (['gallery', 'tag', 'albumname'])
+	// addprefix: bool. only for arrays. default to true.
+	analytics: function(obj, addprefix) {
+		var str = obj;
+		if ($type(obj) == 'array') {
+			str = obj.join('/');
+			if (addprefix != false) str = '/' + str;
+		}
+		else if ($type(obj) != 'string') return;			// obj must be str or array
+
+		// necessary to check if urchinTracker exists
+		if (window.urchinTracker) urchinTracker(str);
+	}
+};
+
+/* Extend existing classes */
+
 Element.extend({
 	popup: function(options) {
 		this.addEvent('click', function(e) {
